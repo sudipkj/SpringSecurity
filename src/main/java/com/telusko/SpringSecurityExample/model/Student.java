@@ -1,4 +1,4 @@
-package com.telusko.SpringSecurityExample;
+package com.telusko.SpringSecurityExample.model;
 
 public class Student {
     private String name;
