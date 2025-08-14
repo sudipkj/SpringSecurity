@@ -1,4 +1,4 @@
-package com.telusko;
+package com.telusko.controller;
 
 import com.telusko.model.Student;
 import jakarta.servlet.http.HttpServletRequest;

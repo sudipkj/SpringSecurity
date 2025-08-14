@@ -20,4 +20,9 @@ public class MyUserDetailsServiceImpl implements UserDetailsService{
         Users user = userRepo.findByUsername(username);
         return new UserPrincipal(user);
     }
+
+    public UserDetails registerUser(Users user) {
+        Users savedUser = userRepo.save(user);
+        return new UserPrincipal(savedUser);
+    }
 }
