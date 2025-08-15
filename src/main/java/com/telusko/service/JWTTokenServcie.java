@@ -1,5 +1,6 @@
 package com.telusko.service;
 
+import com.telusko.model.UserPrincipal;
 import com.telusko.model.Users;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -41,5 +42,24 @@ public class JWTTokenServcie {
         byte[] keyBytes = Decoders.BASE64.decode(key); // Replace with your secret key
         return Keys.hmacShaKeyFor(keyBytes);
 
+    }
+
+    public UserPrincipal validateToken(String jwtToken) {
+        try {
+            String username = Jwts.parser()
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody()
+                    .getSubject();
+
+            // Here you would typically load the user from the database using the username
+            Users user = new Users(); // Replace with actual user retrieval logic
+            user.setUsername(username);
+            return new UserPrincipal(user);
+        } catch (Exception e) {
+            // Handle token validation failure
+            return null;
+        }
     }
 }
