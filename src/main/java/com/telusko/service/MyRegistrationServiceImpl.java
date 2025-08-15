@@ -18,6 +18,9 @@ public class MyRegistrationServiceImpl {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JWTTokenServcie jwtTokenServcie;
+
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
     public void registerUser(Users user) {
@@ -28,7 +31,7 @@ public class MyRegistrationServiceImpl {
     public String verifyUser(Users user) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication != null && authentication.isAuthenticated()) {
-            return "User logged in successfully";
+            return jwtTokenServcie.generateJWTToken(user);
         } else {
 
             throw new RuntimeException("Invalid username or password");
